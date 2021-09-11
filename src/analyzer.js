@@ -16,7 +16,7 @@ export function getSentencesFromLine(line) {
     .filter(Boolean);
 }
 
-export const getWords = sentence => sentence.split(" ").filter(s => s);
+export const getWords = sentence => sentence.split(" ").filter(Boolean);
 
 export const getSyllables = word => {
   const matches = word
