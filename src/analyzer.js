@@ -11,7 +11,7 @@ export function* getSentences(excerpt) {
 
 export function getSentencesFromLine(line) {
   return line
-    .split(/(?<!mr?s?|Mr?s?|[dDjJsS]r)[.!?]/)
+    .split(/(?<!\bmr?s?|\bMr?s?|\b[dDjJsS]r)[.!?]/)
     .map(str => str.trim())
     .filter(Boolean);
 }
@@ -37,28 +37,40 @@ export default excerpt => {
     return {};
   }
 
-  const totalSentences = [...getSentences(excerpt)];
-  const totalWords = totalSentences.reduce((words, sentence) => {
-    return words.concat(getWords(sentence));
-  }, []);
-  const totalAdverbs = getAdverbs(totalWords);
+  const totals = {
+    sentences: 0,
+    words: 0,
+    syllables: 0,
+    adverbs: 0
+  };
+
+  for (const line of excerpt.split("\n")) {
+    for (const sentence of getSentencesFromLine(line)) {
+      totals.sentences++;
+      for (const word of getWords(sentence)) {
+        totals.words++;
+        totals.syllables += getSyllables(word);
+        if (isAdverb(word)) {
+          totals.adverbs++;
+        }
+      }
+    }
+  }
+
   const adverbPercentage =
-    ((totalAdverbs / totalWords.length) * 100).toFixed(2) + "%";
-  const totalSyllables = totalWords.reduce((syllables, word) => {
-    return syllables + getSyllables(word);
-  }, 0);
+    ((totals.adverbs / totals.words) * 100).toFixed(2) + "%";
   const grade = (
-    0.39 * (totalWords.length / totalSentences.length) +
-    11.8 * (totalSyllables / totalWords.length) -
+    0.39 * (totals.words / totals.sentences) +
+    11.8 * (totals.syllables / totals.words) -
     15.59
   ).toFixed(2);
 
   return {
-    sentences: totalSentences.length,
-    words: totalWords.length,
-    adverbs: totalAdverbs,
+    sentences: totals.sentences,
+    words: totals.words,
+    adverbs: totals.adverbs,
     adverbPercentage,
-    syllables: totalSyllables,
+    syllables: totals.syllables,
     grade
   };
 };
