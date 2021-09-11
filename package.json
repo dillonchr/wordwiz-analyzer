@@ -1,0 +1,26 @@
+{
+  "name": "wordwiz-analyzer",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dillonchr/wordwiz-analyzer.git"
+  },
+  "author": "@dillonchr",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/dillonchr/wordwiz-analyzer/issues"
+  },
+  "homepage": "https://github.com/dillonchr/wordwiz-analyzer#readme",
+  "dependencies": {
+    "tape": "^5.3.1"
+  }
+}
