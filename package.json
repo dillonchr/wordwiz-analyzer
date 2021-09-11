@@ -1,5 +1,5 @@
 {
-  "name": "wordwiz-analyzer",
+  "name": "@dillonchr/wordwiz-analyzer",
   "version": "1.0.0",
   "description": "",
   "type": "module",
